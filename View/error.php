@@ -1,5 +1,4 @@
-<?php
+<h1>Erreur !</h1>
+<p>Message d'erreur : "<?= $errorMessage ?>"</p>
 
-?>
-
-<a href="index.php">Retour à l'acceuil</a>
+<a href="/">Retour à l'accueil</a>

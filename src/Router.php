@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App;
-
 
 class Router
 {
@@ -12,43 +10,24 @@ class Router
      * Router constructor.
      * @param $path
      */
-    public function __construct($path)
+    public function __construct(string $path)
     {
-        if (!$path == null) {
-            $this->setPath($path);
-        }
-        $this->getPage($this->getPath());
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * @param mixed $path
-     */
-    public function setPath($path)
-    {
+        //Injection de dépendance avec un type string, donc pas besoin de tester si null.
+        //Comme ton setter ne fait rien de spécial, pas besoin de passer par lui non plus. Getter & setter dégagés.
         $this->path = $path;
+        //La méthode pour lancer le dispatch est désormais appelée depuis le index.php (ça se discute)
     }
 
-
-
-    private function getPage($path) {
-        if ($path == '/annonceo/connection/') {
-            require('view/page_connexion.php');
-        } elseif($path == '/annonceo/inscription/') {
-            require('view/page_inscription.php');
-        } elseif($path == '/annonceo/' ) {
-            require_once('index.php');
+    public function dispatch() {
+        if ($this->path == '/annonceo/connection/') {
+            require('../View/page_connexion.php');
+        } elseif($this->path == '/annonceo/inscription/') {
+            require('../View/page_inscription.php');
+        } elseif($this->path == '/annonceo/' ) {
+            require_once('public/index.php');
         } else {
-            echo $this->getPath();
-            var_dump($this->getPath());
-            require('view/error.php');
+            //Ici on suppose qu'aucune route n'a matché donc c'est plutôt une erreur métier
+            throw new \Exception("Pas de route trouvée !");
         }
     }
 }
