@@ -1,0 +1,10 @@
+{
+  "name": "kangooroux/annonceo",
+  "description": "Projet test cas d'\u0000cole",
+  "type": "project",
+  "autoload": {
+    "psr-4": {"App\\": "src/"}
+  },
+  "require": {
+  }
+}
