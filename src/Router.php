@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Service;
+namespace App;
 
 
 class Router
