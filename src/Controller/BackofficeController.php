@@ -1,16 +1,20 @@
 <?php
 
-namespace Service;
+namespace App\Controller;
+use App\Service\Sanitizer;
+use App\Service\UserManager;
 
-class Container
+class BackofficeController
 {
     private $configuration;
 
     private $pdo;
 
-    public function __construct(array $configuration)
+    private $newUser;
+
+    public function __construct(array $db)
     {
-        $this->configuration = $configuration;
+        $this->configuration = $db;
     }
 
     /**
@@ -33,5 +37,14 @@ class Container
         }
 
         return $this->pdo;
+    }
+
+
+    /**
+     * @param $user
+     */
+    public function registerNewUser($newUserData)
+    {
+        //$newUser = new UserManager(getPDO(), $user);
     }
 }
