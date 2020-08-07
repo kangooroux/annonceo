@@ -12,9 +12,21 @@ class BackofficeController
 
     private $newUser;
 
-    public function __construct(array $db)
+    /**
+     * @var array
+     */
+    private $path;
+    /**
+     * @var array
+     */
+    private $server;
+
+    public function __construct(array $path, array $server, array $db)
     {
         $this->configuration = $db;
+        $this->path = $path;
+        $this->server = $server;
+        $this->dispatch();
     }
 
     /**
@@ -46,5 +58,19 @@ class BackofficeController
     public function registerNewUser($newUserData)
     {
         //$newUser = new UserManager(getPDO(), $user);
+    }
+
+    private function stats()
+    {
+        include '../src/View/stats.php';
+    }
+
+    private function dispatch()
+    {
+        //ici le but va être de parser le 2eme mot du tableau path.
+        //par exemple, je veux que /admin/stats affiche la page des statitiques admin
+        if ($this->path[1] == 'stats') {
+        $this->stats();
+        }
     }
 }

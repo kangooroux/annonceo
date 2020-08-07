@@ -3,7 +3,6 @@
 namespace App;
 use App\Controller\BackofficeController;
 use App\Controller\FrontofficeController;
-use App\Service\Container;
 use App\Service\Sanitizer;
 use App\Service\UserManager;
 
@@ -18,18 +17,30 @@ class Router
     private $sessionLastName;
     private $sessionFirstName;
     private $sessionUserId;
+    private $server;
 
     /**
      * Router constructor.
      * @param null $path
      * @throws \Exception
      */
-    public function __construct($db)
+    public function __construct($db, $server)
     {
         $this->db = $db;
+        $this->server = $server;
     }
 
     public function dispatch() {
+        $path = $this->parse();
+        if ($path[0] == 'admin') {
+            $bo = new BackofficeController($path, $this->server, $this->db);
+        }
+
+        //3 controleurs
+        //back --> /admin
+        //front -->
+        //security -->
+
         if (isset($_POST['deconnexion'])) {
             $sanitizedPostDeconnexion = htmlspecialchars($_POST['deconnexion']);
             $this->path = $sanitizedPostDeconnexion;
@@ -95,7 +106,7 @@ class Router
             $backofficeController = new BackofficeController($this->db);
             $backofficeController->registerNewUser($sanitizedPostValues->sanatizedItems);
         }
-        elseif (isset($_GET['page'])) {
+        elseif (isset($this->get['page'])) {
             $sanitizedPath = new Sanitizer([$_GET['page']]);
             $this->path = $sanitizedPath->sanatizedItems[0];
             if ($this->path == self::PATH_CONNEXION) {
@@ -140,7 +151,7 @@ class Router
             //pageActeurs();
         }
         else {
-            echo 'nul part de chez nul part';
+            throw new \Exception('nul part de chez nul part');
         }
 //        if ($this->path == self::PATH_CONNEXION) {
 //            $pageConnexion = new FrontofficeController(self::PATH_CONNEXION);
@@ -155,6 +166,49 @@ class Router
 //            //Ici on suppose qu'aucune route n'a matché donc c'est plutôt une erreur métier
 //            throw new \Exception("Pas de route trouvée !");
 //        }
+    }
+
+    /**
+     * @return array|bool
+     * si j'ai demandé locahost/annonces/4/edit
+     * Il doit me retourner un array ['annonces', '4', 'edit']
+     */
+    private function parse(): array
+    {
+        //un bon gros explode autour des /
+        //ton explode doit te rendre les mots de l'url dans un tableau
+        //return le tableau
+
+        //http://localhost/security
+            //http://localhost/security/login
+            //http://localhost/security/register
+            //http://localhost/security/profil
+            //http://localhost/security/etc....
+        //http://localhost/annonces
+            //http://localhost/annonces/index
+            //http://localhost/annnonces/[id] (show)
+            //http://localhost/annonces/create
+            //http://localhost/annonces/[id]/edit (pour l'édition)
+        //http://localhost/admin
+            //http://localhost/admin/stats
+            //http://localhost/admin/annonces
+            //http://localhost/admin/categories
+            //http://localhost/admin/notes
+            //http://localhost/admin/membres
+
+        //ce qui est en dessous c'est foiré
+        //du post
+            //login
+            //register
+            //tous les formulaires genre noter une annonce, poster une annonce, ...
+
+        //du get
+            //récupérer toutes les pages.
+
+        return [
+            'admin',
+            'stats',
+        ];
     }
 
     public function __toString()

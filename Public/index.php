@@ -1,4 +1,5 @@
 <?php
+use App\Router;
 
 //Appel de l'autoload
 require dirname(__DIR__).'/vendor/autoload.php';
@@ -11,16 +12,14 @@ try {
     echo "Message : " . $e->getMessage();
 }
 
-use App\Router;
-
 
 try {
-    $router = new Router($db);
+    $router = new Router($db, $_SERVER);
     $router->dispatch();
 } catch(Exception $e) {
     $errorMessage = $e->getMessage();
     //En cas de dispatch raté, on affiche l'erreur ici. Le message est envoyé à la vue.
-    require('../View/error.php');
+    require('../src/View/error.php');
 }
 
 
