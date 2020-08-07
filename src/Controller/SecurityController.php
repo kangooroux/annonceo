@@ -6,6 +6,8 @@ namespace App\Controller;
 
 class SecurityController
 {
+    private $title;
+
     public function __construct()
     {
 
@@ -16,13 +18,24 @@ class SecurityController
 
     }
 
-    private function login()
+    public function login()
     {
-
+        $title = 'Inscription';
+        require_once(dirname(__DIR__).'../View/page_connexion.php');
     }
 
-    private function register()
+    public function register()
     {
+        $title = 'Inscription';
+        require_once(dirname(__DIR__).'../View/page_inscription.php');
+    }
 
+    public function logout()
+    {
+        $_SESSION = array();
+        $this->title = 'Accueil';
+        require_once(dirname(__DIR__).'../View/header.php');
+        require_once(dirname(__DIR__).'../View/accueil.php');
+        require_once(dirname(__DIR__).'../View/footer.php');
     }
 }

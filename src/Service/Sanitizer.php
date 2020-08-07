@@ -6,19 +6,26 @@ namespace App\Service;
 
 class Sanitizer
 {
-    public $sanatizedItems;
+    private $sanatizedString;
+    private $sanitizedArray;
 
     /**
-     * Sanitizer constructor.
-     * @param array $toSanatize
+     * @param string $toSanitize
+     * @return string
+     *
      */
-    public function __construct(array $toSanatize)
+    public function sanitizeString($toSanitize)
     {
-        foreach ($toSanatize as $sanatize) {
-            $sanatized = htmlspecialchars($sanatize);
-            $this->sanatizedItems[] = $sanatized;
+        $this->sanatizedString = htmlspecialchars($toSanitize);
+        return $this->sanatizedString;
+    }
+
+    public function sanitizeArray($toSanitize)
+    {
+        foreach ($toSanitize as $data) {
+            $this->sanitizedArray[] = htmlspecialchars($toSanitize);
+            return $this->sanitizedArray;
         }
-        return $this->sanatizedItems;
     }
 
 }

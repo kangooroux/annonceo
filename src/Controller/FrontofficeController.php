@@ -8,28 +8,17 @@ class FrontofficeController
 {
     private $title;
 
-    public function __construct($title)
+    public function __construct()
     {
-        $this->title = $title;
+
     }
 
-    public function getPageAccueil()
+    public function getHomepage()
     {
-        $title = $this->title;
+
         require_once(dirname(__DIR__).'../View/header.php');
         require_once(dirname(__DIR__).'../View/accueil.php');
         require_once(dirname(__DIR__).'../View/footer.php');
     }
 
-    public function getPageConnexion()
-    {
-        $title = $this->title;
-        require_once(dirname(__DIR__).'../View/page_connexion.php');
-    }
-
-    public function getPageInsciption()
-    {
-        $title = $this->title;
-        require_once(dirname(__DIR__).'../View/page_inscription.php');
-    }
 }

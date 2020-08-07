@@ -12,9 +12,13 @@ try {
     echo "Message : " . $e->getMessage();
 }
 
-
 try {
-    $router = new Router($db, $_SERVER);
+    session_start();
+//    $GLOBALS['_POST']['logout'] = '';
+//    $GLOBALS['_SESSION']['name'] = 'Frank';
+//    $GLOBALS['_SESSION'] = array();
+//    echo $_SESSION['name'] . '<br>';
+    $router = new Router($db, $GLOBALS);
     $router->dispatch();
 } catch(Exception $e) {
     $errorMessage = $e->getMessage();

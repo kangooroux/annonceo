@@ -4,13 +4,9 @@ namespace App\Controller;
 use App\Service\Sanitizer;
 use App\Service\UserManager;
 
-class BackofficeController
+class BackofficeController extends AbstractController
 {
-    private $configuration;
 
-    private $pdo;
-
-    private $newUser;
 
     /**
      * @var array
@@ -19,58 +15,35 @@ class BackofficeController
     /**
      * @var array
      */
-    private $server;
+    private $post;
+    /**
+     * @var array
+     */
+    private $session;
 
-    public function __construct(array $path, array $server, array $db)
+    public function __construct(array $path, array $post, array $session, array $db)
     {
-        $this->configuration = $db;
+        $this->db = $db;
         $this->path = $path;
-        $this->server = $server;
+        $this->post = $post;
+        $this->session = $session;
+
         $this->dispatch();
-    }
-
-    /**
-     * @return \PDO
-     */
-    public function getPDO()
-    {
-        try {
-            if ($this->pdo === null) {
-                $this->pdo = new \PDO(
-                    $this->configuration['db_dsn'],
-                    $this->configuration['db_user'],
-                    $this->configuration['db_pass']
-                );
-
-                $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            }
-        } catch (\Exception $e) {
-            echo $e;
-        }
-
-        return $this->pdo;
-    }
-
-
-    /**
-     * @param $user
-     */
-    public function registerNewUser($newUserData)
-    {
-        //$newUser = new UserManager(getPDO(), $user);
     }
 
     private function stats()
     {
-        include '../src/View/stats.php';
+        include dirname(__DIR__). '../src/View/admin_header.php';
+        include dirname(__DIR__). '../src/View/stats.php';
+        include dirname(__DIR__). '../src/View/admin_footer.php';
     }
 
     private function dispatch()
     {
         //ici le but va être de parser le 2eme mot du tableau path.
         //par exemple, je veux que /admin/stats affiche la page des statitiques admin
-        if ($this->path[1] == 'stats') {
-        $this->stats();
-        }
+//        if ($this->path[2] == 'stats') {
+//            $this->stats();
+//        }
     }
 }
