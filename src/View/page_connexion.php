@@ -15,8 +15,8 @@
         <label for="login">Pseudo : </label>
         <input type="text" id="login" name="login">
         <hr>
-        <label for="password">Password : </label>
-        <input type="text" id="password" name="password">
+        <label for="l-password">Password : </label>
+        <input type="text" id="l-password" name="l-password">
         <hr>
         <input type="submit" value="Send">
     </form>

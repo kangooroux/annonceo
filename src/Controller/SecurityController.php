@@ -4,30 +4,31 @@
 namespace App\Controller;
 
 
-class SecurityController
+use App\Service\Membre;
+use App\Service\MembreManager;
+
+class SecurityController extends AbstractController
 {
-    private $title;
 
-    public function __construct()
+    public function __construct(array $post, array $session, array $db)
     {
-
+        $this->post = $post;
+        $this->db = $db;
     }
 
-    private function dispatch()
+    public function createNewMembre()
     {
-
+        $newUser = new MembreManager($this->getPDO(), $this->post);
     }
 
-    public function login()
+    public function update()
     {
-        $title = 'Inscription';
-        require_once(dirname(__DIR__).'../View/page_connexion.php');
+        
     }
 
-    public function register()
+    public function logUser()
     {
-        $title = 'Inscription';
-        require_once(dirname(__DIR__).'../View/page_inscription.php');
+        
     }
 
     public function logout()

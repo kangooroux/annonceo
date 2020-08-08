@@ -6,7 +6,11 @@ namespace App\Controller;
 
 abstract class AbstractController
 {
+    protected $path;
     protected $db;
+    protected $title;
+    protected $session;
+    protected $post;
 
     private $pdo;
 

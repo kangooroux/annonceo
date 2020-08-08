@@ -4,7 +4,7 @@
 namespace App\Service;
 
 
-abstract class AbstractUser
+class Membre
 {
     private $user_id;
     private $nickname;
